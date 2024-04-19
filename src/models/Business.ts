@@ -32,23 +32,18 @@ export const BusinessSchema: Schema<BusinessInterface> = new Schema({
     },
     businessLogo: {
         type: String,
-        required: true
     },
     businessEmail: {
         type: String,
-        required: true
     },
     businessWebsite: {
         type: String,
-        required: true
     },
     businessGST: {
         type: String,
-        required: true
     },
     businessPAN: {
         type: String,
-        required: true
     },
     businessSignature: {
         type: String,

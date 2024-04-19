@@ -21,8 +21,8 @@ export interface PaymentInterface extends Document {
     upiId: string;
 }
 
-export interface ProductInterface extends Document {
-    item: string;
+export interface ItemInterface extends Document {
+    name: string;
     price: number;
     quantity: number;
 }
@@ -55,7 +55,7 @@ export interface InvoiceInterface extends Document {
     userId: Schema.Types.ObjectId;
     businessId: Schema.Types.ObjectId;
     billingAddress: AddressInterface;
-    shippingAddress: AddressInterface;
+    shippingAddress?: AddressInterface;
     invoiceNumber: string;
     invoiceDate: string;
     currency: string;
@@ -63,7 +63,7 @@ export interface InvoiceInterface extends Document {
     taxType?: string;
     discount?: number;
     paymentMode: string;
-    productDetails: ProductInterface[];
+    productDetails: ItemInterface[];
 }
 
 // Common Schemas
@@ -74,7 +74,6 @@ export const AddressSchema: Schema<AddressInterface> = new Schema({
     },
     address2: {
         type: String,
-        required: true
     },
     city: {
         type: String,

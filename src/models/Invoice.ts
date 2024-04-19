@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { ProductInterface, InvoiceInterface, AddressSchema } from "@/models/index";
+import { ItemInterface, InvoiceInterface, AddressSchema } from "@/models/index";
 
-const ProductSchema: Schema<ProductInterface> = new Schema({
-    item: {
+const ItemSchema: Schema<ItemInterface> = new Schema({
+    name: {
         type: String,
         required: true
     },
@@ -54,7 +54,7 @@ export const InvoiceSchema: Schema<InvoiceInterface> = new Schema({
         type: String,
         required: true
     },
-    productDetails: [ProductSchema]
+    productDetails: [ItemSchema]
 }, { timestamps: true });
 
 const InvoiceModel = (mongoose.models.Invoice as mongoose.Model<InvoiceInterface>) || mongoose.model<InvoiceInterface>('Invoice', InvoiceSchema);
