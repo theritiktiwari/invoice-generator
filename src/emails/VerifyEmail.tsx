@@ -18,11 +18,10 @@ interface VerifyEmailProps {
     userName: string;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_URL;
-
 const copyright = (year: number) => {
     const currentYear = new Date().getFullYear();
-    return year < currentYear ? `${year}-${year % 100}` : `${currentYear}`;
+    if (year > currentYear) return currentYear;
+    return year === currentYear ? year : `${year}-${currentYear % 100}`;
 }
 
 export const VerifyEmail = ({
@@ -35,17 +34,9 @@ export const VerifyEmail = ({
         <Preview>Confirm your email address</Preview>
         <Body style={main}>
             <Container style={container}>
-                <Section style={logoContainer}>
-                    <Img
-                        src={`${baseUrl}/static/logo.png`}
-                        width="120"
-                        height="36"
-                        alt="Slack"
-                    />
-                </Section>
                 <Heading style={h1}>Confirm your email address</Heading>
                 <Text style={heroText}>
-                    Hello {userName}, <br />
+                    Hello <b>{userName}</b>, <br />
                     Thanks for starting the new account creation process. We want to make sure it&apos;s really you. Please enter the following verification code when prompted. If you don&apos;t want to create an account, you can ignore this message.
                 </Text>
 
@@ -59,15 +50,6 @@ export const VerifyEmail = ({
                 </Text>
 
                 <Section>
-                    <Link
-                        style={footerLink}
-                        href={`${baseUrl}/policy`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Policies
-                    </Link>
-                    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                     <Link
                         style={footerLink}
                         href="https://theritiktiwari.vercel.app/"
@@ -113,8 +95,7 @@ export const VerifyEmail = ({
                         Twitter
                     </Link>
                     <Text style={footerText}>
-                        ©{copyright(2024)} {appName}. <br />
-                        All rights reserved.
+                        &copy; {copyright(2026)} {appName}. All rights reserved.
                     </Text>
                 </Section>
             </Container>
@@ -149,10 +130,6 @@ const container = {
     padding: "0px 20px",
 };
 
-const logoContainer = {
-    marginTop: "32px",
-};
-
 const h1 = {
     color: "#1d1c1d",
     fontSize: "36px",
@@ -166,6 +143,7 @@ const heroText = {
     fontSize: "16px",
     lineHeight: "25px",
     marginBottom: "30px",
+    textAlign: "justify" as const,
 };
 
 const codeBox = {
@@ -185,4 +163,5 @@ const text = {
     color: "#000",
     fontSize: "14px",
     lineHeight: "24px",
+    textAlign: "justify" as const,
 };
