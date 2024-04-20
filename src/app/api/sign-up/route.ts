@@ -8,9 +8,9 @@ export async function POST(request: Request) {
     await dbConnect();
 
     try {
-        const { appName, firstName, lastName, email, password } = await request.json();
+        const { firstName, lastName, email, password } = await request.json();
 
-        if ([appName, firstName, lastName, email, password].some(field => !field)) {
+        if ([firstName, email, password].some(field => !field)) {
             return Response.json({
                 success: false,
                 message: "Please fill the required fields."
@@ -56,8 +56,8 @@ export async function POST(request: Request) {
             await newUser.save();
         }
 
-        const userName = `${firstName} ${lastName}`;
-        const emailResponse = await sendVerificationEmail(email, userName, verifyCode, appName);
+        const userName = lastName ? `${firstName} ${lastName}` : firstName;
+        const emailResponse = await sendVerificationEmail(email, userName, verifyCode);
 
         if (!emailResponse.success) {
             return Response.json({

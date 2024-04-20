@@ -14,7 +14,6 @@ import * as React from "react";
 
 interface VerifyEmailProps {
     validationCode: string;
-    appName: string;
     userName: string;
 }
 
@@ -26,7 +25,6 @@ const copyright = (year: number) => {
 
 export const VerifyEmail = ({
     validationCode,
-    appName,
     userName,
 }: VerifyEmailProps) => (
     <Html>
@@ -95,7 +93,7 @@ export const VerifyEmail = ({
                         Twitter
                     </Link>
                     <Text style={footerText}>
-                        &copy; {copyright(2026)} {appName}. All rights reserved.
+                        &copy; {copyright(2026)} {process.env.APP_NAME}. All rights reserved.
                     </Text>
                 </Section>
             </Container>
