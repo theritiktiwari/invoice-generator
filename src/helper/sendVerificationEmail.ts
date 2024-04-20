@@ -1,4 +1,5 @@
-import { resend } from "@/lib/mail";
+import { render } from "@react-email/render";
+
 import verifiyEmail from "@/emails/VerifyEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 
@@ -8,13 +9,31 @@ export async function sendVerificationEmail(
     verifyCode: string,
 ): Promise<ApiResponse> {
     try {
-        await resend.emails.send({
-            from: "onboarding@resend.dev",
-            to: email,
-            subject: `Verification Code | ${process.env.APP_NAME}`,
-            react: verifiyEmail({ validationCode: verifyCode, userName }),
+        const req = await fetch("https://mailer-ritik.vercel.app/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                sender: {
+                    name: process.env.APP_NAME,
+                    mail: process.env.EMAIL_SERVER_USER,
+                    password: process.env.EMAIL_SERVER_PASSWORD
+                },
+                receiver: email,
+                subject: `Verification Code | ${process.env.APP_NAME}`,
+                data: render(verifiyEmail({ validationCode: verifyCode, userName })),
+            })
         });
 
+        const res = await req.json();
+        if (res.type === "error") {
+            return {
+                success: false,
+                message: res.message
+            };
+        }
+        
         return {
             success: true,
             message: "Verification email sent successfully.",
