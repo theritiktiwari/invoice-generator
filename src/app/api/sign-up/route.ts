@@ -57,7 +57,7 @@ export async function POST(request: Request) {
         }
 
         const userName = `${firstName} ${lastName}`;
-        const emailResponse = await sendVerificationEmail(email, verifyCode, appName, userName);
+        const emailResponse = await sendVerificationEmail(email, userName, verifyCode, appName);
 
         if (!emailResponse.success) {
             return Response.json({
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
 
     } catch (error) {
         console.error("[SIGN_UP_API]", error);
-        
+
         return Response.json({
             success: false,
             message: "Error while signing up."
