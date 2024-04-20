@@ -10,7 +10,7 @@ const FullNameSchema: Schema<FullNameInterface> = new Schema({
     lastName: {
         type: String
     }
-});
+}, { _id: false });
 
 const UserSchema: Schema<UserInterface> = new Schema({
     fullName: FullNameSchema,
