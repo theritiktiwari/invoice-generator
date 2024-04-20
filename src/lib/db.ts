@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 type ConnectionObject = {
-    isConnected?: number;
+    isConnected?: string;
 }
 
 const connection: ConnectionObject = {};
@@ -14,10 +14,8 @@ export default async function dbConnect(): Promise<void> {
 
     try {
         const db = await mongoose.connect(process.env.MONGO_URI || "", {});
-        connection.isConnected = db.connections[0].readyState;
+        connection.isConnected = db.connections[0].host;
         console.log(`[DATABASE]: New connection at ${connection.isConnected}`);
-
-        console.log("[DATABASE_CHECK]", db);
     } catch (error) {
         console.error("[DATABASE]: Connection error : ", error);
         process.exit(1);
