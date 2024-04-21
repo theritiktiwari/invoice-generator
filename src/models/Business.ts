@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { AddressSchema, PaymentInterface, BusinessInterface } from '@/models/index';
+import { MailInterface, PaymentInterface, BusinessInterface, AddressSchema } from '@/models/index';
 
 const PaymentSchema: Schema<PaymentInterface> = new Schema({
     accountNumber: {
@@ -18,7 +18,18 @@ const PaymentSchema: Schema<PaymentInterface> = new Schema({
         type: String,
         required: true
     }
-});
+}, { _id: false });
+
+const MailSchema: Schema<MailInterface> = new Schema({
+    userEmail: {
+        type: String,
+        required: true
+    },
+    userPassword: {
+        type: String,
+        required: true
+    }
+}, { _id: false });
 
 export const BusinessSchema: Schema<BusinessInterface> = new Schema({
     userId: {
@@ -50,7 +61,8 @@ export const BusinessSchema: Schema<BusinessInterface> = new Schema({
         required: true
     },
     businessAddress: AddressSchema,
-    paymentDetails: PaymentSchema
+    paymentDetails: PaymentSchema,
+    mailCredentials: MailSchema
 });
 
 const BusinessModel = (mongoose.models.Business as mongoose.Model<BusinessInterface>) || mongoose.model<BusinessInterface>('Business', BusinessSchema);
