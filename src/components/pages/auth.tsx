@@ -6,11 +6,15 @@ import { signIn } from "next-auth/react";
 import { FaGithub, FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form";
 
-import { signInSchema } from "@/schemas/signInSchema";
-import { signUpSchema } from "@/schemas/signUpSchema";
+import { signInSchema, signUpSchema, verifySchema } from "@/schemas/authSchema";
 import { useOrigin } from "@/hooks/use-origin";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
@@ -81,7 +85,8 @@ export function SignUp() {
             });
 
             useToast(response?.data);
-            router.push("/auth/sign-in");
+            router.refresh();
+            router.push(`/auth/verify-code/${form?.email}`);
         } catch (error) {
             // @ts-ignore
             useToast({ success: false, message: error?.response?.data?.message || "Error while creating account." });
@@ -276,6 +281,94 @@ export function AuthCard({
                         Already have an account? <Link href="/auth/sign-in" className="ml-1 text-blue-500 font-semibold">Sign In</Link>
                     </>}
                 </CardDescription>
+            </CardContent>
+        </Card>
+    )
+}
+
+export function Verify({ email }: { email: string }) {
+    const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter();
+
+    const emailValidationResult = verifySchema.pick({ email: true }).safeParse({ email });
+    if (!emailValidationResult.success) {
+        return (<>
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-destructive">Error</CardTitle>
+                    <CardDescription>Given email address is invalid. Please try again.</CardDescription>
+                    <div className="pt-3">
+                        <Button onClick={() => router.back()} variant="destructive" className="w-full">Go Back</Button>
+                    </div>
+                </CardHeader>
+            </Card>
+        </>);
+    }
+
+    const form = useForm<z.infer<typeof verifySchema>>({
+        resolver: zodResolver(verifySchema),
+        defaultValues: {
+            email: email,
+            code: "",
+        },
+    });
+
+    async function onSubmit(data: z.infer<typeof verifySchema>) {
+        try {
+            setLoading(true);
+            const response = await axios.post("/api/auth/verify-code", data);
+
+            useToast(response?.data);
+            router.refresh();
+            router.push(`/auth/sign-in`);
+        } catch (error) {
+            // @ts-ignore
+            useToast({ success: false, message: error?.response?.data?.message || "Error while creating account." });
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Verify Now</CardTitle>
+                <CardDescription>Please enter the OTP sent to your email address.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+                        <FormField
+                            control={form.control}
+                            name="code"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>One-Time Password</FormLabel>
+                                    <FormControl>
+                                        <InputOTP maxLength={6} {...field}>
+                                            <InputOTPGroup>
+                                                <InputOTPSlot index={0} />
+                                                <InputOTPSlot index={1} />
+                                                <InputOTPSlot index={2} />
+                                            </InputOTPGroup>
+                                            <InputOTPSeparator />
+                                            <InputOTPGroup>
+                                                <InputOTPSlot index={3} />
+                                                <InputOTPSlot index={4} />
+                                                <InputOTPSlot index={5} />
+                                            </InputOTPGroup>
+                                        </InputOTP>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <Button type="submit">
+                            {loading ? "Processing..." : "Submit"}
+                        </Button>
+                    </form>
+                </Form>
             </CardContent>
         </Card>
     )
