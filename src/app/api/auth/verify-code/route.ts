@@ -1,25 +1,13 @@
 import dbConnect from "@/lib/db";
 import UserModel from "@/models/User";
-import { verifySchema } from "@/schemas/verifySchema";
 
 export async function POST(request: Request) {
     await dbConnect();
 
     try {
         const { email, code } = await request.json();
-        const decodedEmail = decodeURIComponent(email);
 
-        const codeValidation = verifySchema.safeParse({ code });
-        if (!codeValidation.success) {
-            const codeErrors = codeValidation.error.format().code?._errors || [];
-
-            return Response.json({
-                success: false,
-                message: codeErrors?.length > 0 ? codeErrors.join(', ') : "Error in verification code."
-            }, { status: 400 });
-        }
-
-        const user = await UserModel.findOne({ email: decodedEmail });
+        const user = await UserModel.findOne({ email });
         if (!user) {
             return Response.json({
                 success: false,
@@ -27,7 +15,14 @@ export async function POST(request: Request) {
             }, { status: 404 });
         }
 
-        const isCodeValid = user.verifyCode === codeValidation?.data?.code;
+        if(user.isVerified) {
+            return Response.json({
+                success: false,
+                message: "User already verified."
+            }, { status: 400 });
+        }
+
+        const isCodeValid = user.verifyCode === code;
         const isCodeNotExpired = new Date(user.verifiedCodeExpiry!) > new Date();
 
         if (!isCodeValid) {
