@@ -1,8 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
+
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   const router = useRouter();
@@ -10,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="bg-white text-gray-700 h-screen w-screen flex items-center justify-center px-2">
+      <div className="h-screen w-screen flex items-center justify-center px-2">
         <div className="flex flex-col items-center">
           <p className="sm:text-7xl text-5xl font-bold leading-tight text-center sm:leading-tight lg:leading-tight">
             <span className="relative inline-flex sm:inline">
@@ -29,6 +31,7 @@ export default function Home() {
             >
               {data?.user ? "Carry On" : "Sign In"}
             </Button>
+            <ThemeToggle />
           </div>
         </div>
       </div>
