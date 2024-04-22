@@ -6,11 +6,11 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
 
     if (token && url.pathname.startsWith('/auth/')) {
-        return NextResponse.redirect(new URL('/', request.url))
+        return NextResponse.redirect(new URL('/user', request.url));
     }
 
     if (!token && !(url.pathname.startsWith('/auth/'))) {
-        return NextResponse.redirect(new URL('/auth/sign-in', request.url))
+        return NextResponse.redirect(new URL('/auth/sign-in', request.url));
     }
 }
 
