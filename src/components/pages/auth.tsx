@@ -13,12 +13,11 @@ import { useForm } from "react-hook-form";
 import { signInSchema, signUpSchema, verifySchema } from "@/schemas/authSchema";
 import { useOrigin } from "@/hooks/use-origin";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
-import { Error } from "@/components/pages/form-error";
 
 export function OAuth({ page }: { page: string }) {
     const origin = useOrigin();
@@ -40,53 +39,30 @@ export function OAuth({ page }: { page: string }) {
     </>
 };
 
-interface SignUpValues {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    password?: string;
-}
-
 export function SignUp() {
-    const [form, setForm] = useState<SignUpValues>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [errors, setErrors] = useState<SignUpValues>();
     const [loading, setLoading] = useState<boolean>(false);
 
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setErrors({});
+    const form = useForm<z.infer<typeof signUpSchema>>({
+        resolver: zodResolver(signUpSchema),
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: ""
+        },
+    });
 
-        const result = signUpSchema.safeParse({
-            firstName: form?.firstName,
-            lastName: form?.lastName,
-            email: form?.email,
-            password: form?.password
-        })
-
-        if (!result.success) {
-            return setErrors({
-                firstName: result.error.format().firstName?._errors?.join(', ') || "",
-                lastName: result.error.format().lastName?._errors?.join(', ') || "",
-                email: result.error.format().email?._errors?.join(', ') || "",
-                password: result.error.format().password?._errors?.join(', ') || ""
-            });
-        }
-
+    async function onSubmit(data: z.infer<typeof signUpSchema>) {
         try {
             setLoading(true);
-            const response = await axios.post("/api/auth/sign-up", {
-                firstName: form?.firstName,
-                lastName: form?.lastName,
-                email: form?.email,
-                password: form?.password
-            });
+            const response = await axios.post("/api/auth/sign-up", data);
 
             useToast(response?.data);
             router.refresh();
-            router.push(`/auth/verify-code/${form?.email}`);
+            router.push(`/auth/verify-code/${data?.email}`);
         } catch (error) {
             // @ts-ignore
             useToast({ success: false, message: error?.response?.data?.message || "Error while creating account." });
@@ -96,102 +72,116 @@ export function SignUp() {
     }
 
     return <>
-        <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-y-2">
-                <div className="flex flex-col gap-2 md:flex-row">
-                    <div>
-                        <Input
-                            type="text"
-                            value={form?.firstName}
-                            placeholder="Enter your first name"
-                            onChange={(e) => setForm(() => ({ ...form, firstName: e.target.value }))}
-                        />
-                        <Error message={errors?.firstName} />
-                    </div>
-                    <div>
-                        <Input
-                            type="text"
-                            value={form?.lastName}
-                            placeholder="Enter your last name"
-                            onChange={(e) => setForm(() => ({ ...form, lastName: e.target.value }))}
-                        />
-                        <Error message={errors?.lastName} />
-                    </div>
-                </div>
-                <div>
-                    <Input
-                        type="email"
-                        value={form?.email}
-                        placeholder="Enter your email address"
-                        onChange={(e) => setForm(() => ({ ...form, email: e.target.value }))}
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
+                <div className="flex flex-col md:flex-row gap-2">
+                    <FormField
+                        control={form.control}
+                        name="firstName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="text"
+                                        placeholder="Enter your first name"
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
                     />
-                    <Error message={errors?.email} />
+
+                    <FormField
+                        control={form.control}
+                        name="lastName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="text"
+                                        placeholder="Enter your last name"
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                 </div>
-                <div className="relative">
-                    <div>
-                        <Input
-                            type={showPassword ? "text" : "password"}
-                            value={form?.password}
-                            name="password"
-                            placeholder="Enter your password"
-                            onChange={(e) => setForm(() => ({ ...form, password: e.target.value }))}
-                        />
-                        <Error message={errors?.password} />
-                    </div>
-                    <div>
-                        {!showPassword && <FaEye
-                            onClick={() => setShowPassword(true)}
-                            className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
-                        />}
-                        {showPassword && <FaEyeSlash
-                            onClick={() => setShowPassword(false)}
-                            className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
-                        />}
-                    </div>
-                </div>
-            </div>
-            <Button disabled={loading} variant={"default"} className="w-full mt-3">
-                {loading ? "Processing..." : "Click to Sign Up"}
-            </Button>
-        </form>
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    type="email"
+                                    placeholder="Enter your email address"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem className="relative">
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                />
+                            </FormControl>
+                            <div>
+                                {!showPassword && <FaEye
+                                    onClick={() => setShowPassword(true)}
+                                    className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
+                                />}
+                                {showPassword && <FaEyeSlash
+                                    onClick={() => setShowPassword(false)}
+                                    className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
+                                />}
+                            </div>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <Button type="submit" disabled={loading} variant={"default"} className="w-full mt-3">
+                    {loading ? "Processing..." : "Click to Sign Up"}
+                </Button>
+            </form>
+        </Form>
     </>
 }
 
-interface SignInValues {
-    email?: string;
-    password?: string;
-}
-
 export function SignIn() {
-    const [form, setForm] = useState<SignInValues>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [errors, setErrors] = useState<SignInValues>();
     const [loading, setLoading] = useState<boolean>(false);
 
     const origin = useOrigin();
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setErrors({});
+    const form = useForm<z.infer<typeof signInSchema>>({
+        resolver: zodResolver(signInSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
 
-        const result = signInSchema.safeParse({
-            email: form?.email,
-            password: form?.password
-        })
-
-        if (!result.success) {
-            return setErrors({
-                email: result.error.format().email?._errors?.join(', ') || "",
-                password: result.error.format().password?._errors?.join(', ') || ""
-            });
-        }
-
+    async function onSubmit(data: z.infer<typeof signInSchema>) {
         try {
             setLoading(true);
             const response = await signIn('credentials', {
-                email: form?.email,
-                password: form?.password,
+                email: data?.email,
+                password: data?.password,
                 callbackUrl: origin,
                 redirect: false
             });
@@ -211,44 +201,57 @@ export function SignIn() {
     }
 
     return <>
-        <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-y-2">
-                <div>
-                    <Input
-                        type="email"
-                        value={form?.email}
-                        placeholder="Enter your email address"
-                        onChange={(e) => setForm(() => ({ ...form, email: e.target.value }))}
-                    />
-                    <Error message={errors?.email} />
-                </div>
-                <div className="relative">
-                    <div>
-                        <Input
-                            type={showPassword ? "text" : "password"}
-                            value={form?.password}
-                            name="password"
-                            placeholder="Enter your password"
-                            onChange={(e) => setForm(() => ({ ...form, password: e.target.value }))}
-                        />
-                        <Error message={errors?.password} />
-                    </div>
-                    <div>
-                        {!showPassword && <FaEye
-                            onClick={() => setShowPassword(true)}
-                            className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
-                        />}
-                        {showPassword && <FaEyeSlash
-                            onClick={() => setShowPassword(false)}
-                            className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
-                        />}
-                    </div>
-                </div>
-            </div>
-            <Button disabled={loading} variant={"default"} className="w-full mt-3">
-                {loading ? "Processing..." : "Click to Sign In"}
-            </Button>
-        </form>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    type="email"
+                                    placeholder="Enter your email address"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem className="relative">
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                />
+                            </FormControl>
+                            <div>
+                                {!showPassword && <FaEye
+                                    onClick={() => setShowPassword(true)}
+                                    className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
+                                />}
+                                {showPassword && <FaEyeSlash
+                                    onClick={() => setShowPassword(false)}
+                                    className="cursor-pointer text-gray-600 absolute top-3 right-3 h-4 w-4"
+                                />}
+                            </div>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <Button type="submit" disabled={loading} variant={"default"} className="w-full mt-3">
+                    {loading ? "Processing..." : "Click to Sign In"}
+                </Button>
+            </form>
+        </Form>
     </>
 }
 
