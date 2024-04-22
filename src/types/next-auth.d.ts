@@ -3,9 +3,11 @@ import "next-auth";
 declare module "next-auth" {
     interface User {
         _id?: string;
+        fullName?: {
+            firstName?: string;
+            lastName?: string;
+        }
         isVerified?: boolean;
-        firstName?: string;
-        lastName?: string;
         email?: string;
         role?: string;
     }
