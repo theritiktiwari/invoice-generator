@@ -1,4 +1,4 @@
-import { AuthCard } from "@/components/pages/auth";
+import { AuthCard } from "@/components/auth";
 
 export default async function Page() {
     return <>
