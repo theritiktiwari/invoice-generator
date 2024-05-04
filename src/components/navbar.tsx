@@ -8,10 +8,10 @@ const Navbar = async () => {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
-        <span className="font-bold text-primary uppercase">{process.env.APP_NAME}</span>
+        <span className="font-bold uppercase">{process.env.APP_NAME}</span>
         <NavRoutes className="mx-6" role={session?.user?.role} />
         <div className="ml-auto flex items-center space-x-4">
-          <span className="font-bold">Hello {session?.user?.firstName}</span>
+          {/* <span className="font-bold">Hello {session?.user?.firstName}</span> */}
           <ThemeToggle />
           <SignOut />
         </div>

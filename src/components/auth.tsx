@@ -192,7 +192,7 @@ export function SignIn() {
 
             useToast({ success: true, message: "Signed in successfully." });
             router.refresh();
-            router.push("/");
+            router.push("/user");
         } catch (error) {
             useToast({ success: false, message: "Error while authenticating." });
         } finally {
