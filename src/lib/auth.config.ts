@@ -31,20 +31,14 @@ export const authOptions: NextAuthOptions = {
                     const user = await UserModel.findOne({ email: credentials.email });
                     if (!user) {
                         return null;
-                        // TODO: Add toast message
-                        // throw new Error("No user found.");
                     }
                     if (!user.isVerified) {
                         return null;
-                        // TODO: Add toast message
-                        // throw new Error("Please verify your email address.");
                     }
 
                     const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
                     if (!isPasswordCorrect) {
                         return null;
-                        // TODO: Add toast message
-                        // throw new Error("Invalid credentials.");
                     }
 
                     return user;
@@ -64,7 +58,7 @@ export const authOptions: NextAuthOptions = {
             await dbConnect();
 
             const { name, email } = user;
-            const password = "123456";
+            const password = process.env.DUMMY_PASSWORD!;
             const firstName = name?.split(" ")[0];
             const lastName = name?.split(" ")[1];
 
