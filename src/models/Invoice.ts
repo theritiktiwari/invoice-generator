@@ -14,7 +14,7 @@ const ItemSchema: Schema<ItemInterface> = new Schema({
         type: Number,
         required: true
     }
-});
+}, { _id: false });
 
 export const InvoiceSchema: Schema<InvoiceInterface> = new Schema({
     userId: {
@@ -28,7 +28,6 @@ export const InvoiceSchema: Schema<InvoiceInterface> = new Schema({
         required: true
     },
     billingAddress: AddressSchema,
-    shippingAddress: AddressSchema,
     invoiceNumber: {
         type: String,
         required: true
@@ -41,17 +40,12 @@ export const InvoiceSchema: Schema<InvoiceInterface> = new Schema({
         type: String,
         required: true
     },
-    taxRate: {
-        type: Number
-    },
-    taxType: {
-        type: String
-    },
     discount: {
         type: Number
     },
     paymentMode: {
         type: String,
+        enum: ['UPI', 'NET_BANKING', 'COD'],
         required: true
     },
     productDetails: [ItemSchema]

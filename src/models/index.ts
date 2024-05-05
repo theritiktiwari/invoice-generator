@@ -61,12 +61,9 @@ export interface InvoiceInterface extends Document {
     userId: Schema.Types.ObjectId;
     businessId: Schema.Types.ObjectId;
     billingAddress: AddressInterface;
-    shippingAddress?: AddressInterface;
     invoiceNumber: string;
     invoiceDate: string;
     currency: string;
-    taxRate?: number;
-    taxType?: string;
     discount?: number;
     paymentMode: string;
     productDetails: ItemInterface[];
