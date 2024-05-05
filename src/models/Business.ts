@@ -4,30 +4,24 @@ import { MailInterface, PaymentInterface, BusinessInterface, AddressSchema } fro
 const PaymentSchema: Schema<PaymentInterface> = new Schema({
     accountNumber: {
         type: String,
-        required: true
     },
     ifscCode: {
         type: String,
-        required: true
     },
     bankName: {
         type: String,
-        required: true
     },
     upiId: {
         type: String,
-        required: true
     }
 }, { _id: false });
 
 const MailSchema: Schema<MailInterface> = new Schema({
     userEmail: {
         type: String,
-        required: true
     },
     userPassword: {
         type: String,
-        required: true
     }
 }, { _id: false });
 
@@ -63,7 +57,7 @@ export const BusinessSchema: Schema<BusinessInterface> = new Schema({
     businessAddress: AddressSchema,
     paymentDetails: PaymentSchema,
     mailCredentials: MailSchema
-});
+}, { timestamps: true });
 
 const BusinessModel = (mongoose.models.Business as mongoose.Model<BusinessInterface>) || mongoose.model<BusinessInterface>('Business', BusinessSchema);
 

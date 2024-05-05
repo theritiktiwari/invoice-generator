@@ -15,10 +15,10 @@ export interface AddressInterface extends Document {
 }
 
 export interface PaymentInterface extends Document {
-    accountNumber: string;
-    ifscCode: string;
-    bankName: string;
-    upiId: string;
+    accountNumber?: string;
+    ifscCode?: string;
+    bankName?: string;
+    upiId?: string;
 }
 
 export interface ItemInterface extends Document {
@@ -28,8 +28,8 @@ export interface ItemInterface extends Document {
 }
 
 export interface MailInterface extends Document {
-    userEmail: string;
-    userPassword: string;
+    userEmail?: string;
+    userPassword?: string;
 }
 
 export interface BusinessInterface extends Document {
@@ -43,7 +43,7 @@ export interface BusinessInterface extends Document {
     businessPAN?: string;
     businessSignature: string; // cloudinary url
     paymentDetails: PaymentInterface;
-    mailCredentials?: MailInterface;
+    mailCredentials: MailInterface;
 }
 
 export interface UserInterface extends Document {
@@ -54,7 +54,7 @@ export interface UserInterface extends Document {
     isVerified: boolean;
     verifyCode: string;
     verifiedCodeExpiry: Date;
-    businessDetails: BusinessInterface[];
+    businessDetails: Schema.Types.ObjectId[];
 }
 
 export interface InvoiceInterface extends Document {

@@ -43,7 +43,11 @@ const UserSchema: Schema<UserInterface> = new Schema({
         type: Date,
         required: [true, 'Verification code expiry is required']
     },
-    businessDetails: [BusinessSchema],
+    businessDetails: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Business',
+        default: []
+    }],
 }, { timestamps: true });
 
 const UserModel = (mongoose.models.User as mongoose.Model<UserInterface>) || mongoose.model<UserInterface>('User', UserSchema);

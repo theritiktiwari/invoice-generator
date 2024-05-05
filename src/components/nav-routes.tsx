@@ -20,15 +20,20 @@ export function NavRoutes({
       active: pathname === `/user`,
     },
     {
-      href: `/user/generate`,
-      label: 'Generate',
-      active: pathname === `/user/generate`,
+      href: `/user/business`,
+      label: 'Business Details',
+      active: pathname.includes(`/user/business`)
     },
     {
       href: `/user/invoices`,
       label: 'Invoices',
       active: pathname === `/user/invoices`,
-    }
+    },
+    {
+      href: `/user/generate`,
+      label: 'Generate',
+      active: pathname === `/user/generate`,
+    },
   ]
 
   const adminRoutes = [
