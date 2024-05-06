@@ -98,7 +98,7 @@ export async function ViewInvoice({ data }: { data: any }) {
               {data?.productDetails.map((item: { name: string; quantity: number; price: number; }) => (
                 <TableRow key={data?.productDetails.indexOf(item)}>
                   <TableCell className="border-r-2 border-invoiceBG-foreground text-left">{item.name}</TableCell>
-                  <TableCell className="border-r-2 border-invoiceBG-foreground text-center">{item.quantity}</TableCell>
+                  <TableCell className="border-r-2 border-invoiceBG-foreground text-center">{item.quantity < 10 ? `0${item.quantity}` : item.quantity}</TableCell>
                   <TableCell className="border-r-2 border-invoiceBG-foreground text-center">{formatter.format(item.price)}</TableCell>
                   <TableCell className="text-right">{formatter.format(item.quantity * item.price)}</TableCell>
                 </TableRow>
