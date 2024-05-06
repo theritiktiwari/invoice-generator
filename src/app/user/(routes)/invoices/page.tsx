@@ -12,8 +12,8 @@ export default async function Page() {
     const formattedData: InvoiceColumn[] = invoices ? invoices.map((item: any) => ({
         id: item?._id?.toString(),
         businessName: item?.businessId?.businessName,
+        customerName: item?.customerName,
         invoiceNumber: item?.invoiceNumber,
-        paymentMode: item?.paymentMode,
         invoiceDate: format(item?.invoiceDate || new Date(), 'MMMM do, yyyy'),
     })) : [];
 

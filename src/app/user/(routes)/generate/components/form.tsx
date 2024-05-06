@@ -34,7 +34,6 @@ export default function GenerateInvoice({ business }: { business: BusinessInterf
         { label: "INR", value: "INR" },
         { label: "EUR", value: "EUR" },
         { label: "GBP", value: "GBP" },
-        { label: "AUD", value: "AUD" },
     ];
 
     const businessOptions = business?.map((item: BusinessInterface) => ({
@@ -53,7 +52,7 @@ export default function GenerateInvoice({ business }: { business: BusinessInterf
             // @ts-ignore
             let response = await addInvoice({ data, userId });
             router.refresh();
-            router.push(`/user/invoices/${response?.data}`);
+            router.push(`/user/invoices/${response?.data}?query=view`);
             useToast(response!);
         } catch (error: any) {
             useToast({ success: false, message: 'Something went wrong.' })
@@ -152,6 +151,19 @@ export default function GenerateInvoice({ business }: { business: BusinessInterf
                             )}
                         />
                         <FormField
+                            name="customerName"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Customer Name</FormLabel>
+                                    <FormControl>
+                                        <Input disabled={loading} placeholder="Enter the customer name" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
                             name="currency"
                             control={form.control}
                             render={({ field }) => (
@@ -171,28 +183,6 @@ export default function GenerateInvoice({ business }: { business: BusinessInterf
                                             ))}
                                         </SelectContent>
                                     </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            name="discount"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Discount</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="number"
-                                            disabled={loading}
-                                            placeholder="Enter the discount value"
-                                            {...field}
-                                            onChange={(e) => {
-                                                const value = parseFloat(e.target.value);
-                                                field.onChange(isNaN(value) ? '' : value);
-                                            }}
-                                        />
-                                    </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}

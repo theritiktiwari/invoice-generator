@@ -59,7 +59,7 @@ export async function ViewInvoice({ data }: { data: any }) {
         <div className="flex justify-between items-start my-10">
           <div>
             <h3 className="text-xl font-bold">Billed To:</h3>
-            <p className="font-medium">{"data?.customerName"}</p>
+            <p className="font-medium">{data?.customerName}</p>
             <p>{data?.billingAddress?.address1}</p>
             <p>{data?.billingAddress?.address2}</p>
             <p>{`

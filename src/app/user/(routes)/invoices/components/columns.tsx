@@ -25,8 +25,8 @@ export const columns: ColumnDef<InvoiceColumn>[] = [
     header: "Business Name",
   },
   {
-    accessorKey: "paymentMode",
-    header: "Payment Mode",
+    accessorKey: "customerName",
+    header: "Customer Name",
   },
   {
     id: "actions",

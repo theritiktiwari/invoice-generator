@@ -19,7 +19,7 @@ export const InvoiceClient: React.FC<InvoiceClientProps> = ({
         <Heading title={`Invoices (${data.length})`} description="Manage your invoices for your customers." />
       </div>
       <Separator />
-      <DataTable searchKey="invoiceNumber" columns={columns} data={data} />
+      <DataTable placeholder={"Search by customer name"} searchKey="customerName" columns={columns} data={data} />
     </>
   );
 };

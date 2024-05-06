@@ -39,7 +39,6 @@ export function EditInvoice({ business, initialData }: EditInvoiceProps) {
     { label: "INR", value: "INR" },
     { label: "EUR", value: "EUR" },
     { label: "GBP", value: "GBP" },
-    { label: "AUD", value: "AUD" },
   ];
 
   const businessOptions = business?.map((item: BusinessInterface) => ({
@@ -53,8 +52,8 @@ export function EditInvoice({ business, initialData }: EditInvoiceProps) {
       businessId: initialData?.businessId?._id,
       invoiceNumber: initialData?.invoiceNumber,
       invoiceDate: new Date(initialData?.invoiceDate),
+      customerName: initialData?.customerName,
       currency: initialData?.currency,
-      discount: initialData?.discount,
       billingAddress: initialData?.billingAddress,
       paymentMode: initialData?.paymentMode,
       totalItems: initialData?.productDetails?.length,
@@ -168,6 +167,19 @@ export function EditInvoice({ business, initialData }: EditInvoiceProps) {
               )}
             />
             <FormField
+              name="customerName"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Customer Name</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="Enter the customer name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
               name="currency"
               control={form.control}
               render={({ field }) => (
@@ -187,28 +199,6 @@ export function EditInvoice({ business, initialData }: EditInvoiceProps) {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="discount"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Discount</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      disabled={loading}
-                      placeholder="Enter the discount value"
-                      {...field}
-                      onChange={(e) => {
-                        const value = parseFloat(e.target.value);
-                        field.onChange(isNaN(value) ? '' : value);
-                      }}
-                    />
-                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

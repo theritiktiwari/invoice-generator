@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { EditInvoice } from "./components/input-form";
-import { ViewInvoice } from "./components/view";
+import { EditInvoice } from "./components/edit-invoice";
+import { ViewInvoice } from "./components/view-invoice";
 import { getInvoiceById } from "@/functions/invoice";
 import { getBusinessDetails } from "@/functions/business";
 import { getSession } from "@/helper/getSession";
