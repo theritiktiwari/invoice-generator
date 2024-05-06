@@ -71,3 +71,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+* {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+@media print {
+  * {
+    border-color: hsl(214.3 31.8% 91.4%) !important;
+  }
+
+  .hideOnPrinting {
+    display: none;
+  }
+
+  .colorOnPrinting {
+    color: hsl(222.2 84% 4.9%) !important;
+  }
+
+  .widthOnPrinting {
+    width: 100% !important;
+  }
+
+  .imageOnPrinting {
+    filter: none !important;
+  }
+
+  .bg-invoiceBG {
+    background-color: hsl(196, 54%, 88%) !important;
+  }
+
+  .text-invoice {
+    color: hsl(205, 86%, 23%) !important;
+  }
+
+  .border-invoiceBG-foreground {
+    border-color: hsl(195, 62%, 84%) !important;
+  }
+}

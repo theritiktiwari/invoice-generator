@@ -26,18 +26,18 @@ export async function ViewInvoice({ data }: { data: any }) {
   const totalAmount = data?.productDetails.reduce((acc: number, item: { quantity: number; price: number; }) => acc + (item.quantity * item.price), 0);
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between hideOnPrinting">
         <Heading title={`Invoice ${data?.invoiceNumber}`} description={"This is your invoice for your customer."} />
         <div className="flex gap-2">
           {session?.user?.role === "ADMIN" && <SendInvoice />}
           {((session?.user?.role === "USER") &&
             (data?.businessId?.mailCredentials?.userPassword)) &&
             <SendInvoice />}
-          <PrintInvoice />
+          <PrintInvoice id={data?.invoiceNumber} />
         </div>
       </div>
-      <Separator />
-      <section className={`${poppins.className} font-light md:w-[75%] mx-auto`}>
+      <Separator className="hideOnPrinting" />
+      <section className={`${poppins.className} font-light md:w-[75%] mx-auto colorOnPrinting widthOnPrinting`}>
         <div className="flex justify-between items-center my-10">
           <div className="w-[50px] h-[50px]">
             <Image
@@ -123,7 +123,11 @@ export async function ViewInvoice({ data }: { data: any }) {
             {data?.businessId?.paymentDetails?.accountNumber && <p><span className="font-bold">{`Account Number: `}</span> {data?.businessId?.paymentDetails?.accountNumber}</p>}
             {data?.businessId?.paymentDetails?.upiId && <p><span className="font-bold">{`UPI ID: `}</span> {data?.businessId?.paymentDetails?.upiId}</p>}
 
-            <p><span className="font-bold">{`Payment Method: `}</span> {data?.paymentMode}</p>
+            <p><span className="font-bold">{`Payment Method: `}</span>
+              {data?.paymentMode === "NET_BANKING" ? "Net Banking" :
+                data?.paymentMode === "COD" ? "Cash On Delivery" :
+                  data?.paymentMode}
+            </p>
           </div>
 
           <div className="flex flex-col justify-center items-center gap-3">
@@ -133,7 +137,7 @@ export async function ViewInvoice({ data }: { data: any }) {
                 alt={data?.businessId?.businessName}
                 width={900}
                 height={900}
-                className="rounded-lg dark:invert"
+                className="rounded-lg dark:invert imageOnPrinting"
               />
             </div>
             <p className="font-bold">Authorized Signatory</p>
