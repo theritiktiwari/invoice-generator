@@ -64,7 +64,7 @@ export interface InvoiceInterface extends Document {
     invoiceNumber: string;
     invoiceDate: string;
     currency: string;
-    discount?: number;
+    customerName: string;
     paymentMode: string;
     productDetails: ItemInterface[];
 }

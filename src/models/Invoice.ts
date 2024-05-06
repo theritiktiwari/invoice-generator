@@ -40,8 +40,9 @@ export const InvoiceSchema: Schema<InvoiceInterface> = new Schema({
         type: String,
         required: true
     },
-    discount: {
-        type: Number
+    customerName: {
+        type: String,
+        required: true
     },
     paymentMode: {
         type: String,
