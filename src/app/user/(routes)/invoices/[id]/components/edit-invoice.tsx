@@ -4,7 +4,7 @@ import * as z from "zod";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -30,6 +30,8 @@ interface EditInvoiceProps {
 
 export function EditInvoice({ business, initialData }: EditInvoiceProps) {
   const router = useRouter();
+  const params = useParams();
+
   const { data: session } = useSession();
 
   const [loading, setLoading] = useState(false);
@@ -66,10 +68,10 @@ export function EditInvoice({ business, initialData }: EditInvoiceProps) {
       setLoading(true);
       let userId = session?.user?._id;
       // @ts-ignore
-      let response = await updateInvoice({ data, userId, id: initialData._id });
-      router.refresh();
-      router.push(`/user/invoices`);
+      let response = await updateInvoice({ data, userId, id: params.id });
       useToast(response!);
+      router.refresh();
+      router.push(`/user/invoices/${params?.id}?query=view`);
     } catch (error: any) {
       useToast({ success: false, message: 'Something went wrong.' })
     } finally {
