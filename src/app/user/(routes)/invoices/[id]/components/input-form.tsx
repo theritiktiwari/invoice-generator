@@ -23,12 +23,12 @@ import { Heading } from "@/components/ui/heading";
 import { useToast } from "@/components/ui/toast";
 import { Calendar } from "@/components/ui/calendar";
 
-interface EditInvoiveProps {
+interface EditInvoiceProps {
   business: BusinessInterface[];
   initialData: any;
 }
 
-export function EditInvoice({ business, initialData }: EditInvoiveProps) {
+export function EditInvoice({ business, initialData }: EditInvoiceProps) {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -117,7 +117,7 @@ export function EditInvoice({ business, initialData }: EditInvoiveProps) {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Invoive Number</FormLabel>
+                  <FormLabel>Invoice Number</FormLabel>
                   <FormControl>
                     <Input disabled={loading} placeholder="Enter the invoice number" {...field} />
                   </FormControl>

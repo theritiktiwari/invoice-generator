@@ -1,5 +1,5 @@
 import { getBusinessDetails } from "@/functions/business";
-import GenerateInvoive from "./components/form";
+import GenerateInvoice from "./components/form";
 import { getSession } from "@/helper/getSession";
 
 export default async function Page() {
@@ -10,7 +10,7 @@ export default async function Page() {
 
     return (
         <div className="flex-1 space-y-4 p-8 pt-6">
-            <GenerateInvoive business={business} />
+            <GenerateInvoice business={business} />
         </div>
     )
 }

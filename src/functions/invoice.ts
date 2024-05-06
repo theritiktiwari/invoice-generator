@@ -12,7 +12,7 @@ interface InvoiceProps {
     id?: string;
 }
 
-export async function addInvoive({ data, userId }: InvoiceProps): Promise<ApiResponse> {
+export async function addInvoice({ data, userId }: InvoiceProps): Promise<ApiResponse> {
     await dbConnect();
     try {
         // @ts-ignore

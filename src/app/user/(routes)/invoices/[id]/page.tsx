@@ -21,8 +21,8 @@ export default async function Page({ params, searchParams }: PageProps) {
     }
     const { query } = searchParams;
     const session = await getSession();
-    const invoiveResponse = await getInvoiceById({ userId: session?.user?._id, id: params.id });
-    const invoice: InvoiceInterface = invoiveResponse?.data ? JSON.parse(JSON.stringify(invoiveResponse.data)) : null;
+    const invoiceResponse = await getInvoiceById({ userId: session?.user?._id, id: params.id });
+    const invoice: InvoiceInterface = invoiceResponse?.data ? JSON.parse(JSON.stringify(invoiceResponse.data)) : null;
 
     if(!invoice) return redirect("/404");
 

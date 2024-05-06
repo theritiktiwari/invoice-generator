@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
-import { addInvoive} from "@/functions/invoice";
+import { addInvoice } from "@/functions/invoice";
 import { BusinessInterface } from "@/models/index";
 import { invoiceSchema } from "@/schemas/invoiceSchema";
 import { cn } from "@/lib/utils";
@@ -23,7 +23,7 @@ import { Heading } from "@/components/ui/heading";
 import { useToast } from "@/components/ui/toast";
 import { Calendar } from "@/components/ui/calendar";
 
-export default function GenerateInvoive({ business }: { business: BusinessInterface[] }) {
+export default function GenerateInvoice({ business }: { business: BusinessInterface[] }) {
     const router = useRouter();
     const { data: session } = useSession();
 
@@ -51,7 +51,7 @@ export default function GenerateInvoive({ business }: { business: BusinessInterf
             setLoading(true);
             let userId = session?.user?._id;
             // @ts-ignore
-            let response = await addInvoive({ data, userId });
+            let response = await addInvoice({ data, userId });
             router.refresh();
             router.push(`/user/invoices/${response?.data}`);
             useToast(response!);
@@ -101,7 +101,7 @@ export default function GenerateInvoive({ business }: { business: BusinessInterf
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Invoive Number</FormLabel>
+                                    <FormLabel>Invoice Number</FormLabel>
                                     <FormControl>
                                         <Input disabled={loading} placeholder="Enter the invoice number" {...field} />
                                     </FormControl>
