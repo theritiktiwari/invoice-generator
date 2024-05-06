@@ -37,7 +37,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   return (
     <div>
-      {value.length > 0 ? <div className="flex items-center gap-4">
+      {value?.length > 0 ? <div className="flex items-center gap-4">
         <div key={value} className="relative w-[120px] h-[120px] rounded-md overflow-hidden">
           <div className="z-10 absolute top-2 right-2">
             <Button type="button" onClick={() => onRemove(value)} variant="destructive" size="sm">

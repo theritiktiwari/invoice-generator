@@ -44,28 +44,7 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
 
   const form = useForm<z.infer<typeof businessSchema>>({
     resolver: zodResolver(businessSchema),
-    defaultValues: initialData || {
-      businessName: "",
-      businessLogo: "",
-      businessEmail: "",
-      businessWebsite: "",
-      businessGST: "",
-      businessPAN: "",
-      businessAddress: {
-        address1: "",
-        address2: "",
-        city: "",
-        state: "",
-        pincode: ""
-      },
-      businessSignature: "",
-      paymentDetails: {
-        accountNumber: "",
-        ifscCode: "",
-        bankName: "",
-        upiId: ""
-      },
-    },
+    defaultValues: initialData ? initialData : {},
   });
 
   async function onSubmit(data: z.infer<typeof businessSchema>) {
