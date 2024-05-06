@@ -9,7 +9,6 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, Table
 import { setCurrency } from "@/lib/utils";
 import { getSession } from "@/helper/getSession";
 
-import { SendInvoice } from "./send-invoice";
 import { PrintInvoice } from "./print-invoice";
 
 import logo from "/public/logo.png";
@@ -28,13 +27,7 @@ export async function ViewInvoice({ data }: { data: any }) {
     <>
       <div className="flex items-center justify-between hideOnPrinting">
         <Heading title={`Invoice ${data?.invoiceNumber}`} description={"This is your invoice for your customer."} />
-        <div className="flex gap-2">
-          {session?.user?.role === "ADMIN" && <SendInvoice />}
-          {((session?.user?.role === "USER") &&
-            (data?.businessId?.mailCredentials?.userPassword)) &&
-            <SendInvoice />}
-          <PrintInvoice id={data?.invoiceNumber} />
-        </div>
+        <PrintInvoice id={data?.invoiceNumber} />
       </div>
       <Separator className="hideOnPrinting" />
       <section className={`${poppins.className} font-light md:w-[75%] mx-auto colorOnPrinting widthOnPrinting`}>
