@@ -27,7 +27,7 @@ export function NavRoutes({
     {
       href: `/user/invoices`,
       label: 'Invoices',
-      active: pathname === `/user/invoices`,
+      active: pathname.includes(`/user/invoices`)
     },
     {
       href: `/user/generate`,

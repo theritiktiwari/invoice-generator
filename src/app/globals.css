@@ -22,6 +22,10 @@
     --destructive-foreground: 210 40% 98%;
     --success: 135 71% 37%;
     --success-foreground: 210 40% 98%;
+    --invoice: 205, 86%, 23%;
+    --invoice-foreground: 205 87% 33%;
+    --invoice-bg: 196, 54%, 88%;
+    --invoice-bg-foreground: 195, 62%, 84%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
@@ -47,6 +51,10 @@
     --destructive-foreground: 210 40% 98%;
     --success: 135 71% 37%;
     --success-foreground: 210 40% 98%;
+    --invoice: 196, 54%, 88%;
+    --invoice-foreground: 195, 62%, 84%;
+    --invoice-bg: 205, 86%, 23%;
+    --invoice-bg-foreground: 205 87% 33%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;

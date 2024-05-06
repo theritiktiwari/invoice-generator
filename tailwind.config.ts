@@ -40,6 +40,14 @@ const config = {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
+        invoice: {
+          DEFAULT: "hsl(var(--invoice))",
+          foreground: "hsl(var(--invoice-foreground))",
+        },
+        invoiceBG: {
+          DEFAULT: "hsl(var(--invoice-bg))",
+          foreground: "hsl(var(--invoice-bg-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
