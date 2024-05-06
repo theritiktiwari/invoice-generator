@@ -28,7 +28,7 @@ export const BusinessClient: React.FC<BusinessClientProps> = ({
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey="businessName" columns={columns} data={data} />
+      <DataTable placeholder={"Search by business name"} searchKey="businessName" columns={columns} data={data} />
     </>
   );
 };
