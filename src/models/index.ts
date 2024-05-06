@@ -27,11 +27,6 @@ export interface ItemInterface extends Document {
     quantity: number;
 }
 
-export interface MailInterface extends Document {
-    userEmail?: string;
-    userPassword?: string;
-}
-
 export interface BusinessInterface extends Document {
     userId: Schema.Types.ObjectId;
     businessName: string;
@@ -43,7 +38,6 @@ export interface BusinessInterface extends Document {
     businessPAN?: string;
     businessSignature: string; // cloudinary url
     paymentDetails: PaymentInterface;
-    mailCredentials: MailInterface;
 }
 
 export interface UserInterface extends Document {

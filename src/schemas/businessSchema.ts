@@ -23,9 +23,5 @@ export const businessSchema = z.object({
         ifscCode: z.string().length(11, { message: "IFSC must be of 11 characters" }).optional().or(z.literal('')),
         bankName: z.string().min(2, { message: "Bank name must be at least 2 characters" }).optional().or(z.literal('')),
         upiId: z.string().min(5, { message: "UPI ID must be at least 5 character" }).optional().or(z.literal('')),
-    }),
-    mailCredentials: z.object({
-        userEmail: z.string().email({ message: "Invalid email" }).optional().or(z.literal('')),
-        userPassword: z.string().min(5, { message: "Password must be at least 5 characters" }).optional().or(z.literal('')),
-    }),
+    })
 });

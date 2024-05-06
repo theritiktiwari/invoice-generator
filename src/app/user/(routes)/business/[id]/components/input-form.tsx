@@ -65,10 +65,6 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
         bankName: "",
         upiId: ""
       },
-      mailCredentials: {
-        userEmail: "",
-        userPassword: ""
-      }
     },
   });
 
@@ -390,36 +386,6 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
                   <FormLabel>UPI ID</FormLabel>
                   <FormControl>
                     <Input disabled={loading} placeholder="Enter your UPI id" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="mailCredentials.userEmail"
-              control={form.control}
-              disabled={state === "view"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sender Email</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="Enter email address" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="mailCredentials.userPassword"
-              control={form.control}
-              disabled={state === "view"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sender App Password</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="Enter email app password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
