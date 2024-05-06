@@ -8,6 +8,7 @@ const itemSchema = z.object({
 
 export const invoiceSchema = z.object({
     businessId: z.string({ required_error: "Please select business name" }),
+    customerName: z.string().min(3, { message: "Customer name must be at least 3 character" }),
     billingAddress: z.object({
         address1: z.string().min(3, { message: "Address must be at least 3 character" }),
         address2: z.string().min(3, { message: "Address must be at least 3 character" }).optional().or(z.literal('')),
@@ -18,7 +19,6 @@ export const invoiceSchema = z.object({
     invoiceNumber: z.string().min(1, { message: "Invoice number must be at least 1 character" }),
     invoiceDate: z.date().refine((date) => date <= new Date(), { message: "Invoice date cannot be in the future" }),
     currency: z.string({ required_error: "Please select currency" }),
-    discount: z.number().min(1, { message: "Discount must be at least 1 character" }).optional().or(z.literal('')),
     paymentMode: z.string({ required_error: "Please select payment method" }),
     totalItems: z.number().min(1, { message: "Total items must be at least 1" }),
     productDetails: z.array(itemSchema).max(10, { message: "Maximum 10 items are allowed" }),
