@@ -78,7 +78,6 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
       let userId = session?.user?._id;
       let response;
       if (initialData) {
-        console.log("[EDIT]", data);
         //@ts-ignore
         response = await updateBusinessDetails({ data, userId, id: initialData._id });
       } else {
