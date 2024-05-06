@@ -12,6 +12,8 @@ import { getSession } from "@/helper/getSession";
 import { SendInvoice } from "./send-invoice";
 import { PrintInvoice } from "./print-invoice";
 
+import logo from "/public/logo.png";
+
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
@@ -39,7 +41,7 @@ export async function ViewInvoice({ data }: { data: any }) {
         <div className="flex justify-between items-center my-10">
           <div className="w-[50px] h-[50px]">
             <Image
-              src={data?.businessId?.businessLogo}
+              src={data?.businessId?.businessLogo || logo.src}
               alt={data?.businessId?.businessName}
               width={500}
               height={500}
