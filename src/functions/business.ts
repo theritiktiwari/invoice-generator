@@ -6,6 +6,7 @@ import axios from "axios";
 import dbConnect from "@/lib/db";
 import UserModel from "@/models/User";
 import BusinessModel from "@/models/Business";
+import InvoiceModel from "@/models/Invoice";
 import { BusinessInterface } from "@/models/index";
 import { ApiResponse } from "@/types/ApiResponse";
 
@@ -148,6 +149,8 @@ export async function deleteBusinessDetails({ id, userId }: { id: string; userId
 
         user.businessDetails = user?.businessDetails?.filter((businessId) => businessId.toString() !== id);
         user.save();
+
+        await InvoiceModel.deleteMany({ businessId: id });
 
         await BusinessModel.findByIdAndDelete(id);
 

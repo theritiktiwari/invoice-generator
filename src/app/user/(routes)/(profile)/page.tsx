@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCaption, TableCell, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { getSession } from "@/helper/getSession";
 import { EditName } from "@/components/edit-profile";
 import { getName } from "@/functions/user";
@@ -11,7 +11,6 @@ export default async function Page() {
         <>
             <div>
                 <Table className="md:w-[50%] w-[95%] mx-auto mt-20">
-                    <TableCaption>Please Login again for better user experience.</TableCaption>
                     <TableBody>
                         <TableRow>
                             <TableCell className="font-bold">Full Name</TableCell>

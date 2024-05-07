@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { UserForm } from "./components/input-form";
 import { getUserDetailById } from "@/functions/user";
 import { getSession } from "@/helper/getSession";
-import { UserInterface } from "@/models/index";
 
 export default async function Page({ params }: { params: { id: string } }) {
     if (!/^[0-9a-fA-F]{24}$/.test(params.id) && params.id !== "new") {

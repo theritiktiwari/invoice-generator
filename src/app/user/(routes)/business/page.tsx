@@ -3,7 +3,6 @@ import { getSession } from "@/helper/getSession"
 import { BusinessColumn } from "./components/columns"
 import { BusinessClient } from "./components/client";
 import { getBusinessDetails } from "@/functions/business";
-import { BusinessInterface } from "@/models/index";
 
 export default async function Page() {
     const session = await getSession();

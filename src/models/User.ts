@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 import { FullNameInterface, UserInterface } from "@/models/index";
-import { BusinessSchema } from "@/models/Business";
 
 const FullNameSchema: Schema<FullNameInterface> = new Schema({
     firstName: {
