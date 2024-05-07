@@ -293,6 +293,14 @@ export function Verify({ email }: { email: string }) {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
 
+    const form = useForm<z.infer<typeof verifySchema>>({
+        resolver: zodResolver(verifySchema),
+        defaultValues: {
+            email: email,
+            code: "",
+        },
+    });
+
     const emailValidationResult = verifySchema.pick({ email: true }).safeParse({ email });
     if (!emailValidationResult.success) {
         return (<>
@@ -307,14 +315,6 @@ export function Verify({ email }: { email: string }) {
             </Card>
         </>);
     }
-
-    const form = useForm<z.infer<typeof verifySchema>>({
-        resolver: zodResolver(verifySchema),
-        defaultValues: {
-            email: email,
-            code: "",
-        },
-    });
 
     async function onSubmit(data: z.infer<typeof verifySchema>) {
         try {
