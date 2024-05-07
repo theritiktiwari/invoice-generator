@@ -20,7 +20,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
-import { useToast } from "@/components/ui/toast";
+import { UseToast } from "@/components/ui/toast";
 import { Calendar } from "@/components/ui/calendar";
 
 interface EditInvoiceProps {
@@ -69,11 +69,11 @@ export function EditInvoice({ business, initialData }: EditInvoiceProps) {
       let userId = session?.user?._id;
       // @ts-ignore
       let response = await updateInvoice({ data, userId, id: params.id });
-      useToast(response!);
+      UseToast(response!);
       router.refresh();
       router.push(`/user/invoices/${params?.id}?query=view`);
     } catch (error: any) {
-      useToast({ success: false, message: 'Something went wrong.' })
+      UseToast({ success: false, message: 'Something went wrong.' })
     } finally {
       setLoading(false);
     }

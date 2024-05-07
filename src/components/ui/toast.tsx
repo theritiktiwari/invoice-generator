@@ -9,7 +9,7 @@ interface ToastProps {
   duration?: number;
 }
 
-export function useToast({
+export function UseToast({
   success,
   message,
   position = "bottom-right",

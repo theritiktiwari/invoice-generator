@@ -16,7 +16,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { useToast } from "@/components/ui/toast"
+import { UseToast } from "@/components/ui/toast"
 import ImageUpload from "@/components/ui/image-upload"
 import { useSession } from "next-auth/react"
 
@@ -61,9 +61,9 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
       }
       router.refresh();
       router.push(`/user/business`);
-      useToast(response!);
+      UseToast(response!);
     } catch (error: any) {
-      useToast({ success: false, message: 'Something went wrong.' })
+      UseToast({ success: false, message: 'Something went wrong.' })
     } finally {
       setLoading(false);
     }
@@ -75,9 +75,9 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
       const response = await deleteBusinessDetails({ id: initialData?._id, userId: session?.user?._id });
       router.refresh();
       router.push(`/user/business`);
-      useToast(response);
+      UseToast(response);
     } catch (error: any) {
-      useToast({ success: false, message: 'Something went wrong.' })
+      UseToast({ success: false, message: 'Something went wrong.' })
     } finally {
       setLoading(false);
       setOpen(false);

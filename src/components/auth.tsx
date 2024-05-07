@@ -17,7 +17,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/toast";
+import { UseToast } from "@/components/ui/toast";
 
 export function OAuth({ page }: { page: string }) {
     const origin = useOrigin();
@@ -60,12 +60,12 @@ export function SignUp() {
             setLoading(true);
             const response = await axios.post("/api/auth/sign-up", data);
 
-            useToast(response?.data);
+            UseToast(response?.data);
             router.refresh();
             router.push(`/auth/verify-code/${data?.email}`);
         } catch (error) {
             // @ts-ignore
-            useToast({ success: false, message: error?.response?.data?.message || "Error while creating account." });
+            UseToast({ success: false, message: error?.response?.data?.message || "Error while creating account." });
         } finally {
             setLoading(false);
         }
@@ -187,14 +187,14 @@ export function SignIn() {
             });
 
             if (response?.error) {
-                return useToast({ success: false, message: "Invalid credentials." });
+                return UseToast({ success: false, message: "Invalid credentials." });
             }
 
-            useToast({ success: true, message: "Signed in successfully." });
+            UseToast({ success: true, message: "Signed in successfully." });
             router.refresh();
             router.push("/user");
         } catch (error) {
-            useToast({ success: false, message: "Error while authenticating." });
+            UseToast({ success: false, message: "Error while authenticating." });
         } finally {
             setLoading(false);
         }
@@ -321,12 +321,12 @@ export function Verify({ email }: { email: string }) {
             setLoading(true);
             const response = await axios.post("/api/auth/verify-code", data);
 
-            useToast(response?.data);
+            UseToast(response?.data);
             router.refresh();
             router.push(`/auth/sign-in`);
         } catch (error) {
             // @ts-ignore
-            useToast({ success: false, message: error?.response?.data?.message || "Error while creating account." });
+            UseToast({ success: false, message: error?.response?.data?.message || "Error while creating account." });
         } finally {
             setLoading(false);
         }

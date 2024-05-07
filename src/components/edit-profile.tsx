@@ -6,7 +6,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { EditModal } from "@/components/modals/edit-modal";
 import { changeName } from "@/functions/user";
-import { useToast } from "@/components/ui/toast";
+import { UseToast } from "@/components/ui/toast";
 
 interface EditNameProps {
     firstName: string;
@@ -29,7 +29,7 @@ export const EditName: React.FC<EditNameProps> = ({ firstName, lastName, id }) =
         setLoading(true);
         try {
             if (!data.fName) {
-                return useToast({ success: false, message: "First Name is required." });
+                return UseToast({ success: false, message: "First Name is required." });
             }
 
             await changeName({
@@ -38,11 +38,11 @@ export const EditName: React.FC<EditNameProps> = ({ firstName, lastName, id }) =
                 id
             })
 
-            useToast({ success: true, message: "Name updated successfully." });
+            UseToast({ success: true, message: "Name updated successfully." });
             router.refresh();
             setOpen(false);
         } catch (error) {
-            useToast({ success: false, message: "Something went wrong." });
+            UseToast({ success: false, message: "Something went wrong." });
         } finally {
             setLoading(false);
         }

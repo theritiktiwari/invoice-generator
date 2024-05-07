@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { useToast } from "@/components/ui/toast";
+import { UseToast } from "@/components/ui/toast";
 import { InvoiceColumn } from "./columns";
 import { deleteInvoice } from "@/functions/invoice";
 
@@ -33,10 +33,10 @@ export const CellAction: React.FC<CellActionProps> = ({
     try {
       setLoading(true);
       const response = await deleteInvoice(session?.user?._id, data.id);
-      useToast(response);
+      UseToast(response);
       router.refresh();
     } catch (error) {
-      useToast({ success: false, message: 'Something went wrong.' })
+      UseToast({ success: false, message: 'Something went wrong.' })
     } finally {
       setOpen(false);
       setLoading(false);

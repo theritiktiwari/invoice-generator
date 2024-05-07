@@ -17,7 +17,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { useToast } from "@/components/ui/toast"
+import { UseToast } from "@/components/ui/toast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 
@@ -64,9 +64,9 @@ export const UserForm = ({ initialData }: UserFormProps) => {
       }
       router.refresh();
       router.push(`/user/manage-users`);
-      useToast(response!);
+      UseToast(response!);
     } catch (error: any) {
-      useToast({ success: false, message: error?.message || 'Something went wrong.' })
+      UseToast({ success: false, message: error?.message || 'Something went wrong.' })
     } finally {
       setLoading(false);
     }
@@ -78,9 +78,9 @@ export const UserForm = ({ initialData }: UserFormProps) => {
       const response = await deleteUserDetails({ userId: initialData?._id, adminId: session?.user?._id });
       router.refresh();
       router.push(`/user/manage-users`);
-      useToast(response);
+      UseToast(response);
     } catch (error: any) {
-      useToast({ success: false, message: error?.message || 'Something went wrong.' })
+      UseToast({ success: false, message: error?.message || 'Something went wrong.' })
     } finally {
       setLoading(false);
       setOpen(false);

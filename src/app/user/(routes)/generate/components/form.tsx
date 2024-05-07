@@ -20,7 +20,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
-import { useToast } from "@/components/ui/toast";
+import { UseToast } from "@/components/ui/toast";
 import { Calendar } from "@/components/ui/calendar";
 
 export default function GenerateInvoice({ business }: { business: BusinessInterface[] }) {
@@ -53,9 +53,9 @@ export default function GenerateInvoice({ business }: { business: BusinessInterf
             let response = await addInvoice({ data, userId });
             router.refresh();
             router.push(`/user/invoices/${response?.data}?query=view`);
-            useToast(response!);
+            UseToast(response!);
         } catch (error: any) {
-            useToast({ success: false, message: 'Something went wrong.' })
+            UseToast({ success: false, message: 'Something went wrong.' })
         } finally {
             setLoading(false);
         }
