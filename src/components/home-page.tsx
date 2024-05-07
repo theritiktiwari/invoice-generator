@@ -15,7 +15,7 @@ export default function PageButtons({ data }: { data: any }) {
                 <Button
                     onClick={() => router.push(`${data ? "/user" : "/auth/sign-in"}`)}
                 >
-                    {data ? "Carry On" : "Sign In"}
+                    {data ? "Start Generating" : "Sign In"}
                 </Button>
                 <ThemeToggle />
             </div>
