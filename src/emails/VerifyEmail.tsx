@@ -93,7 +93,7 @@ export const VerifyEmail = ({
                         Twitter
                     </Link>
                     <Text style={footerText}>
-                        &copy; {copyright(2024)} {process.env.APP_NAME}. All rights reserved.
+                        &copy; {copyright(2024)} {process.env.NEXT_PUBLIC_APP_NAME}. All rights reserved.
                     </Text>
                 </Section>
             </Container>

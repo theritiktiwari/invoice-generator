@@ -33,7 +33,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
                 {(query === "update") && <EditInvoice initialData={invoice} business={business} />}
-                {(query === "view") && <ViewInvoice data={invoice} />}
+                {(query === "view") && <ViewInvoice invoice={invoice} />}
             </div>
         </div>
     );

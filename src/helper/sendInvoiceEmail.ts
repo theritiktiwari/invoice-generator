@@ -1,12 +1,13 @@
+"use server";
+
 import { render } from "@react-email/render";
 
-import verifiyEmail from "@/emails/VerifyEmail";
+import invoiceEmail from "@/emails/InvoiceEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 
-export async function sendVerificationEmail(
+export async function sendInvoiceEmail(
     email: string,
-    userName: string,
-    verifyCode: string,
+    data: any
 ): Promise<ApiResponse> {
     try {
         const req = await fetch("https://mailer-ritik.vercel.app/send", {
@@ -16,13 +17,13 @@ export async function sendVerificationEmail(
             },
             body: JSON.stringify({
                 sender: {
-                    name: process.env.NEXT_PUBLIC_APP_NAME,
+                    name: data?.businessName,
                     mail: process.env.EMAIL_SERVER_USER,
                     password: process.env.EMAIL_SERVER_PASSWORD
                 },
                 receiver: email,
-                subject: `Verification Code | ${process.env.NEXT_PUBLIC_APP_NAME}`,
-                data: render(verifiyEmail({ validationCode: verifyCode, userName })),
+                subject: `Invoice ${data?.invoiceNumber} | ${process.env.NEXT_PUBLIC_APP_NAME}`,
+                data: render(invoiceEmail({ data })),
             })
         });
 
@@ -33,16 +34,16 @@ export async function sendVerificationEmail(
                 message: res.message
             };
         }
-        
+
         return {
             success: true,
-            message: "Verification email sent successfully.",
+            message: "Invoice sent successfully.",
         };
     } catch (error) {
         console.error("[VERIFICATION_EMAIL]", error);
         return {
             success: false,
-            message: "Failed to send verification email."
+            message: "Failed to send invoice."
         };
     }
 }
