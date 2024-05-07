@@ -40,12 +40,7 @@ export function NavRoutes({
     {
       href: `/user/manage-users`,
       label: 'Manage Users',
-      active: pathname === `/user/manage-users`,
-    },
-    {
-      href: `/user/manage-invoices`,
-      label: 'Manage Invoices',
-      active: pathname === `/user/manage-invoices`,
+      active: pathname.includes(`/user/manage-users`)
     },
   ]
 
