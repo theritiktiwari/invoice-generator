@@ -21,7 +21,7 @@ export async function addInvoice({ data, userId }: InvoiceProps): Promise<ApiRes
         const invoice = new InvoiceModel(data);
         await invoice.save();
 
-        return { success: true, message: "Business details added successfully.", data: invoice._id };
+        return { success: true, message: "Invoice generated successfully.", data: invoice._id };
     } catch (error) {
         return { success: false, message: "Something went wrong." };
     }

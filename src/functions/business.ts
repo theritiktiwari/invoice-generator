@@ -33,7 +33,7 @@ const generateSignature = (publicId: string, apiSecret: string) => {
     return `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
 };
 
-const handleDeleteImage = async (itemUrl: string) => {
+export const handleDeleteImage = async (itemUrl: string) => {
     const ID = getPublicIdFromURL(itemUrl);
     if (!ID) return;
 
@@ -69,7 +69,7 @@ export async function addBusinessDetails({ data, userId }: BusinessProps): Promi
         businessDetail.save();
 
         const user = await UserModel.findById(userId);
-        user?.businessDetails.push(businessDetail._id);
+        user?.businessDetails?.push(businessDetail._id);
         user?.save();
 
         return { success: true, message: "Business details added successfully." };
@@ -84,7 +84,7 @@ export async function getBusinessDetails(userId: string): Promise<ApiResponse> {
         const user = await UserModel.findById(userId).populate("businessDetails");
         if (!user) return { success: false, message: "User not found." };
 
-        return { success: true, message: "Business details fetched successfully.", data: user.businessDetails };
+        return { success: true, message: "Business details fetched successfully.", data: user?.businessDetails };
     } catch (error) {
         return { success: false, message: "Something went wrong." };
     }
@@ -100,7 +100,7 @@ export async function getBusinessDetailById(
         const user = await UserModel.findById(userId).populate("businessDetails");
         if (!user) return { success: false, message: "User not found." };
 
-        const business = user.businessDetails.find((item: any) => item?._id.toString() === id);
+        const business = user?.businessDetails?.find((item: any) => item?._id.toString() === id);
         if (!business) return { success: false, message: "Business not found." };
 
         return { success: true, message: "Business details fetched successfully.", data: business };
@@ -146,7 +146,7 @@ export async function deleteBusinessDetails({ id, userId }: { id: string; userId
         const user = await UserModel.findById(userId);
         if (!user) return { success: false, message: "User not found." };
 
-        user.businessDetails = user.businessDetails.filter((businessId) => businessId.toString() !== id);
+        user.businessDetails = user?.businessDetails?.filter((businessId) => businessId.toString() !== id);
         user.save();
 
         await BusinessModel.findByIdAndDelete(id);
