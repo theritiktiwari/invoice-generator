@@ -53,7 +53,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           />
         </div>
       </div> :
-        <CldUploadWidget onUpload={onUpload} uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET}>
+        <CldUploadWidget
+          onUpload={onUpload}
+          uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET}
+          options={{ folder: "invoice-generator" }}
+        >
           {({ open }) => {
             const onClick = () => {
               open();

@@ -154,7 +154,7 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
                   <FormControl>
                     <ImageUpload
                       value={field.value || ""}
-                      disabled={loading}
+                      disabled={loading || state === "view"}
                       onChange={(url) => field.onChange(url)}
                       onRemove={() => { state !== "view" && field.onChange('') }}
                     />
@@ -301,7 +301,7 @@ export const BusinessForm = ({ initialData }: BusinessFormProps) => {
                   <FormControl>
                     <ImageUpload
                       value={field.value}
-                      disabled={loading}
+                      disabled={loading || state === "view"}
                       onChange={(url) => field.onChange(url)}
                       onRemove={() => { state !== "view" && field.onChange('') }}
                     />
