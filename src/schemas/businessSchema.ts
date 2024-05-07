@@ -4,7 +4,13 @@ export const businessSchema = z.object({
     businessName: z.string().min(1, { message: "Name must be at least 1 character" }),
     businessLogo: z.string().optional().or(z.literal('')),
     businessEmail: z.string().email({ message: "Invalid email" }).optional().or(z.literal('')),
-    businessWebsite: z.string().min(1, { message: "Website must be at least 1 character" }).optional().or(z.literal('')),
+    businessWebsite: z.string()
+        .min(1, { message: "Website must be at least 1 character" })
+        .optional().or(z.literal(''))
+        .refine((website) => {
+            const regex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return regex.test(website!);
+        }, { message: "Only domain name is required" }),
     businessGST: z.string().min(5, { message: "GST must be at least 5 characters" }).optional().or(z.literal('')),
     businessPAN: z.string().length(10, { message: "PAN must be of 10 characters" }).optional().or(z.literal('')),
     businessAddress: z.object({
